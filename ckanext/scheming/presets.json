@@ -93,6 +93,14 @@
         "display_snippet": "date.html",
         "validators": "scheming_required isodate"
       }
+    },
+    {
+      "preset_name": "datetime",
+      "values": {
+        "form_snippet": "datetime.html",
+        "display_snippet": "datetime.html",
+        "validators": "scheming_isodatetime"
+      }
     }
   ]
 }
