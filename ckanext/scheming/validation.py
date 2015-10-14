@@ -95,9 +95,9 @@ def scheming_isodatetime(field, schema):
 
         if isinstance(value, datetime.datetime):
             return value
-        if not value is missing:
+        if value is not missing:
             try:
-                 date = h.date_str_to_datetime(value)
+                date = h.date_str_to_datetime(value)
             except (TypeError, ValueError), e:
                 raise Invalid(date_error)
         else:
@@ -108,7 +108,11 @@ def scheming_isodatetime(field, schema):
                 for input_suffix in ['date', 'time']:
                     input = key[0] + '_' + input_suffix
                     new_key = (input,) + tuple(x for x in key if x != key[0])
-                    value = data[('__extras',)][input]
+                    try:
+                        value = data[('__extras',)][input]
+                    except KeyError:
+                        data[key] = date
+                        return date
                     data[new_key] = value
                     errors[new_key] = []
 
@@ -132,7 +136,6 @@ def scheming_isodatetime(field, schema):
 
         data[key] = date
         return date
-
 
     return validator
 
