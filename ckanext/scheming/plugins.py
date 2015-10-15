@@ -92,6 +92,7 @@ class _SchemingMixin(object):
             'scheming_multiple_choice_output': scheming_multiple_choice_output,
             'scheming_isodatetime': scheming_isodatetime,
             'convert_to_json_if_date': convert_to_json_if_date,
+            'scheming_isodatetime': scheming_isodatetime
             }
 
     def _add_template_directory(self, config):

@@ -101,20 +101,19 @@ def scheming_isodatetime(field, schema):
             except (TypeError, ValueError), e:
                 raise Invalid(date_error)
         else:
-            if ('__extras',) not in data:
+            extras = data.get(('__extras',))
+            if not extras or key[0] + '_date' not in extras:
                 if field.get('required'):
                     not_empty(key, data, errors, context)
             else:
                 for input_suffix in ['date', 'time']:
                     input = key[0] + '_' + input_suffix
                     new_key = (input,) + tuple(x for x in key if x != key[0])
-                    try:
-                        value = data[('__extras',)][input]
-                    except KeyError:
-                        data[key] = date
-                        return date
+                    value = extras[input]
                     data[new_key] = value
                     errors[new_key] = []
+
+                    del extras[input]
 
                     if field.get('required'):
                         not_empty(new_key, data, errors, context)
